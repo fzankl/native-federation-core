@@ -2,15 +2,14 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "module": "esnext",
     "outDir": "./out-tsc/vitest",
     "types": ["vitest/globals", "vitest/importMeta", "vite/client", "node", "vitest"],
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["**/*.spec.ts", "**/*.test.ts", "**/*.d.ts"],
+  "include": ["**/*.spec.ts", "**/*.test.ts", "**/*.d.ts", "**/*.ts"],
   "references": [
     {
-      "path": "./tsconfig.lib.json"
+      "path": "./tsconfig.build.json"
     }
   ]
 }

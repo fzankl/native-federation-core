@@ -135,7 +135,6 @@ function handleRemoteLoadError(
  * @returns Merged import map containing all remotes' contributions
  *
  */
-
 export async function fetchAndRegisterRemotes(
   remotes: Record<string, string>,
   options: ProcessRemoteInfoOptions = { throwIfRemoteNotFound: false }
@@ -162,6 +161,19 @@ export async function fetchAndRegisterRemotes(
   );
 
   return importMap;
+}
+
+/**
+ * @deprecated Use `fetchAndRegisterRemotes` instead.
+ * @param remotes
+ * @param options
+ * @returns
+ */
+export async function processRemoteInfos(
+  remotes: Record<string, string>,
+  options: ProcessRemoteInfoOptions = { throwIfRemoteNotFound: false }
+): Promise<ImportMap> {
+  return fetchAndRegisterRemotes(remotes, options);
 }
 
 /**

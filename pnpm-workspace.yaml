@@ -1,5 +1,4 @@
 packages:
   - packages/core
-  - packages/domain
   - packages/runtime
   - packages/node

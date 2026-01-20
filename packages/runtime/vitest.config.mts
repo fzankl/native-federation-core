@@ -9,7 +9,7 @@ export default defineConfig({
     setupFiles: ['src/test-setup.ts'],
     reporters: ['default'],
     coverage: {
-      reportsDirectory: '../../coverage/libs/native-federation-runtime',
+      reportsDirectory: './coverage',
       provider: 'v8',
     },
     watch: false,
@@ -21,12 +21,7 @@ export default defineConfig({
           name: 'unit',
           environment: 'jsdom',
           include: testPatterns,
-          exclude: [
-            ...integrationTestPatterns,
-            'node_modules',
-            'dist',
-            '.angular',
-          ],
+          exclude: [...integrationTestPatterns, 'node_modules', 'dist', '.angular'],
         },
       },
       {
@@ -36,7 +31,7 @@ export default defineConfig({
           browser: {
             enabled: true,
             provider: 'playwright',
-            headless: true,
+            headless: process.env.CI === 'true',
             instances: [
               {
                 browser: 'chromium',

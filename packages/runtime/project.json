@@ -23,6 +23,7 @@
     "test": {
       "executor": "nx:run-commands",
       "options": {
+        "cwd": "packages/runtime",
         "command": "vitest run"
       },
       "dependsOn": ["^build"]
