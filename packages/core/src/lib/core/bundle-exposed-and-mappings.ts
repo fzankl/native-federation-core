@@ -1,20 +1,19 @@
 import fs from 'fs';
 import path from 'path';
 
-import type { ExposesInfo, SharedInfo } from './../domain/federation-info.contract.js';
-import type { NormalizedFederationConfig } from '../config/federation-config.contract.js';
+import type {
+  ArtefactInfo,
+  ExposesInfo,
+  SharedInfo,
+} from '../domain/core/federation-info.contract.js';
+import type { NormalizedFederationConfig } from '../domain/config/federation-config.contract.js';
 import { createBuildResultMap, lookupInResultMap } from '../utils/build-result-map.js';
 import { bundle } from '../utils/build-utils.js';
 import { logger } from '../utils/logger.js';
 import { normalize } from '../utils/normalize.js';
-import { type FederationOptions } from './federation-options.js';
+import { type FederationOptions } from '../domain/core/federation-options.contract.js';
 import { AbortedError } from '../utils/errors.js';
-import type { EntryPoint } from './build-adapter.js';
-
-export interface ArtefactInfo {
-  mappings: SharedInfo[];
-  exposes: ExposesInfo[];
-}
+import type { EntryPoint } from './../domain/core/build-adapter.contract.js';
 
 export async function bundleExposedAndMappings(
   config: NormalizedFederationConfig,

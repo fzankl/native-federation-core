@@ -1,8 +1,8 @@
 import path from 'path';
 import fs from 'fs';
 import crypto from 'crypto';
-import type { NormalizedExternalConfig } from '../config/external-config.contract.js';
-import type { SharedInfo } from '../domain/federation-info.contract.js';
+import type { NormalizedExternalConfig } from '../domain/config/external-config.contract.js';
+import type { SharedInfo } from '../domain/core/federation-info.contract.js';
 import { logger } from '../utils/logger.js';
 
 export const getCachePath = (workspaceRoot: string, project: string) =>

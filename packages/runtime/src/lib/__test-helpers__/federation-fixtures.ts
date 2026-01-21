@@ -1,4 +1,4 @@
-import type { FederationInfo } from '@nf-beta/core';
+import type { FederationInfo } from '@nf-beta/core/domain';
 
 /**
  * Test fixture builder for FederationInfo objects

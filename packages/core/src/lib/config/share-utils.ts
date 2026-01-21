@@ -1,25 +1,21 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import { cwd } from 'process';
-import {
-  DEFAULT_SKIP_LIST,
-  isInSkipList,
-  type PreparedSkipList,
-  prepareSkipList,
-  type SkipList,
-} from '../core/default-skip-list.js';
+import { DEFAULT_SKIP_LIST, isInSkipList, prepareSkipList } from './default-skip-list.js';
+import { type SkipList, type PreparedSkipList } from '../domain/config/skip-list.contract.js';
 import { findDepPackageJson, getVersionMaps, type VersionMap } from '../utils/package-info.js';
 import { getConfigContext } from './configuration-context.js';
 import { logger } from '../utils/logger.js';
 
-import { type KeyValuePair, resolveWildcardKeys } from '../utils/resolve-wildcard-keys.js';
+import { resolveWildcardKeys } from '../utils/resolve-wildcard-keys.js';
 import type {
   ExternalConfig,
   IncludeSecondariesOptions,
   ShareAllExternalsOptions,
   SharedExternalsConfig,
   ShareExternalsOptions,
-} from './external-config.contract.js';
+} from '../domain/config/external-config.contract.js';
+import type { KeyValuePair } from '../domain/utils/keyvaluepair.contract.js';
 
 let inferVersion = false;
 

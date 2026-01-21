@@ -1,4 +1,4 @@
-import type { BuildNotificationOptions } from '../domain/build-notification-options.contract.js';
+import type { BuildNotificationOptions } from './build-notification-options.contract.js';
 
 export interface FederationOptions {
   workspaceRoot: string;

@@ -2,10 +2,10 @@ import { getProjectData, type ProjectData } from '@softarc/sheriff-core';
 import path from 'path';
 import fs from 'fs';
 import { cwd } from 'process';
-import type { NormalizedFederationConfig } from '../config/federation-config.contract.js';
+import type { NormalizedFederationConfig } from '../domain/config/federation-config.contract.js';
 import { getPackageInfo, type PackageInfo } from '../utils/package-info.js';
 import { getExternalImports as extractExternalImports } from '../utils/get-external-imports.js';
-import { type MappedPath } from '../utils/mapped-paths.js';
+import { type MappedPath } from '../domain/utils/mapped-path.contract.js';
 import { normalizePackageName } from '../utils/normalize.js';
 
 export function removeUnusedDeps(

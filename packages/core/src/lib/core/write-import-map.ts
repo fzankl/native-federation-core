@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import type { SharedInfo } from '../domain/federation-info.contract.js';
-import type { FederationOptions } from './federation-options.js';
+import type { SharedInfo } from '../domain/core/federation-info.contract.js';
+import type { FederationOptions } from '../domain/core/federation-options.contract.js';
 
 export function writeImportMap(sharedInfo: SharedInfo[], fedOption: FederationOptions) {
   const imports = sharedInfo.reduce((acc, cur) => {

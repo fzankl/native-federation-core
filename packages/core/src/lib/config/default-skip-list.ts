@@ -1,6 +1,4 @@
-export type SkipFn = (name: string) => boolean;
-export type SkipListEntry = string | RegExp | SkipFn;
-export type SkipList = SkipListEntry[];
+import type { PreparedSkipList, SkipFn, SkipList } from '../domain/config/skip-list.contract.js';
 
 export const DEFAULT_SKIP_LIST: SkipList = [
   '@softarc/native-federation-runtime',
@@ -21,41 +19,30 @@ export const DEFAULT_SKIP_LIST: SkipList = [
   // '@angular/ssr',
   /\/schematics(\/|$)/,
   /^@nx\/angular/,
-  (pkg) => pkg.startsWith('@angular/') && !!pkg.match(/\/testing(\/|$)/),
-  (pkg) => pkg.startsWith('@types/'),
+  pkg => pkg.startsWith('@angular/') && !!pkg.match(/\/testing(\/|$)/),
+  pkg => pkg.startsWith('@types/'),
   'express',
   // (pkg) => pkg.startsWith('@angular/common/locales'),
 ];
 
-export type PreparedSkipList = {
-  strings: Set<string>;
-  functions: SkipFn[];
-  regexps: RegExp[];
-};
-
 export function prepareSkipList(skipList: SkipList): PreparedSkipList {
   return {
-    strings: new Set<string>(
-      skipList.filter((e) => typeof e === 'string') as string[],
-    ),
-    functions: skipList.filter((e) => typeof e === 'function') as SkipFn[],
-    regexps: skipList.filter((e) => typeof e === 'object') as RegExp[],
+    strings: new Set<string>(skipList.filter(e => typeof e === 'string') as string[]),
+    functions: skipList.filter(e => typeof e === 'function') as SkipFn[],
+    regexps: skipList.filter(e => typeof e === 'object') as RegExp[],
   };
 }
 
-export function isInSkipList(
-  entry: string,
-  skipList: PreparedSkipList,
-): boolean {
+export function isInSkipList(entry: string, skipList: PreparedSkipList): boolean {
   if (skipList.strings.has(entry)) {
     return true;
   }
 
-  if (skipList.functions.find((f) => f(entry))) {
+  if (skipList.functions.find(f => f(entry))) {
     return true;
   }
 
-  if (skipList.regexps.find((r) => r.test(entry))) {
+  if (skipList.regexps.find(r => r.test(entry))) {
     return true;
   }
 

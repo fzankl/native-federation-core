@@ -38,7 +38,7 @@
     }
   },
   "dependencies": {
-    "@nf-beta/core": "^0.0.7",
+    "@nf-beta/core": "^0.0.10",
     "@nf-beta/runtime": "^0.0.2"
   }
 }

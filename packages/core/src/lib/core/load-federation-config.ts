@@ -1,5 +1,5 @@
-import type { NormalizedFederationConfig } from '../config/federation-config.contract.js';
-import type { FederationOptions } from './federation-options.js';
+import type { NormalizedFederationConfig } from '../domain/config/federation-config.contract.js';
+import type { FederationOptions } from '../domain/core/federation-options.contract.js';
 import * as path from 'path';
 import * as fs from 'fs';
 import { removeUnusedDeps } from './remove-unused-deps.js';

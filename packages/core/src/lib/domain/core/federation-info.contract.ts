@@ -22,3 +22,8 @@ export interface ExposesInfo {
     entryPoint: string;
   };
 }
+
+export interface ArtefactInfo {
+  mappings: SharedInfo[];
+  exposes: ExposesInfo[];
+}

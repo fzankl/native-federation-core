@@ -1,10 +1,16 @@
-import { getMappedPaths, type MappedPath } from '../utils/mapped-paths.js';
+import { getMappedPaths } from '../utils/mapped-paths.js';
 import { shareAll, findRootTsConfigJson } from './share-utils.js';
-import type { FederationConfig, NormalizedFederationConfig } from './federation-config.contract.js';
-import { isInSkipList, type PreparedSkipList, prepareSkipList } from '../core/default-skip-list.js';
+import type {
+  FederationConfig,
+  NormalizedFederationConfig,
+} from '../domain/config/federation-config.contract.js';
+import { isInSkipList, prepareSkipList } from './default-skip-list.js';
+import { type PreparedSkipList } from '../domain/config/skip-list.contract.js';
+
 import { logger } from '../utils/logger.js';
 import { DEFAULT_SERVER_DEPS_LIST } from '../core/default-server-deps-list.js';
-import type { NormalizedSharedExternalsConfig } from './external-config.contract.js';
+import type { NormalizedSharedExternalsConfig } from '../domain/config/external-config.contract.js';
+import type { MappedPath } from '../domain/utils/mapped-path.contract.js';
 
 export function withNativeFederation(config: FederationConfig): NormalizedFederationConfig {
   const skip = prepareSkipList(config.skip ?? []);

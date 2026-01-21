@@ -1,8 +1,8 @@
 import path from 'path';
-import type { BuildResult } from '../core/build-adapter.js';
+import type { NFBuildAdapterResult } from '../domain/core/build-adapter.contract.js';
 
 export function createBuildResultMap(
-  buildResult: BuildResult[],
+  buildResult: NFBuildAdapterResult[],
   isHashed: boolean
 ): Record<string, string> {
   const map: Record<string, string> = {};

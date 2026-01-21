@@ -1,9 +1,5 @@
 import fg from 'fast-glob';
-
-export type KeyValuePair = {
-  key: string;
-  value: string;
-};
+import type { KeyValuePair } from '../domain/utils/keyvaluepair.contract.js';
 
 function escapeRegex(str: string) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -48,7 +44,7 @@ function withoutWildcard(template: string, wildcardValues: string[]) {
 export function resolveWildcardKeys(
   keyPattern: string,
   valuePattern: string,
-  cwd: string,
+  cwd: string
 ): KeyValuePair[] {
   const normalizedPattern = valuePattern.replace(/^\.?\/+/, '');
 

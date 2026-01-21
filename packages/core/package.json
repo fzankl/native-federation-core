@@ -1,6 +1,6 @@
 {
   "name": "@nf-beta/core",
-  "version": "0.0.8",
+  "version": "0.0.10",
   "type": "module",
   "dependencies": {
     "@softarc/sheriff-core": "^0.19.6",
@@ -19,6 +19,11 @@
       "types": "./src/config.d.ts",
       "import": "./src/config.js",
       "default": "./src/config.js"
+    },
+    "./domain": {
+      "types": "./src/domain.d.ts",
+      "import": "./src/domain.js",
+      "default": "./src/domain.js"
     },
     "./internal": {
       "types": "./src/internal.d.ts",

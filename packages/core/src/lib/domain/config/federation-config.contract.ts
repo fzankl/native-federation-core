@@ -1,5 +1,5 @@
-import type { PreparedSkipList, SkipList } from '../core/default-skip-list.js';
-import type { MappedPath } from '../utils/mapped-paths.js';
+import type { PreparedSkipList, SkipList } from './skip-list.contract.js';
+import type { MappedPath } from '../utils/mapped-path.contract.js';
 import type {
   NormalizedSharedExternalsConfig,
   SharedExternalsConfig,

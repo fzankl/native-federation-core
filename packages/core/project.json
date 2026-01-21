@@ -38,8 +38,10 @@
         "main": "packages/core/src/index.ts",
         "outputPath": "packages/core/dist",
         "additionalEntryPoints": [
-          "packages/core/src/build.ts",
-          "packages/core/src/util.ts"
+          "packages/core/src/config.ts",
+          "packages/core/src/domain.ts",
+          "packages/core/src/internal.ts"
+
         ],
         "tsConfig": "packages/core/tsconfig.build.json",
         "generateExportsField": true

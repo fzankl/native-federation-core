@@ -9,7 +9,7 @@ import {
   mergeImportMaps,
   processHostInfo,
 } from '@nf-beta/runtime';
-import { type FederationInfo } from '@nf-beta/core';
+import { type FederationInfo } from '@nf-beta/core/domain';
 import { IMPORT_MAP_FILE_NAME } from '../utils/import-map-loader.js';
 import { resolver } from '../utils/loader-as-data-url.js';
 

@@ -1,26 +1,24 @@
-import type { FederationInfo, SharedInfo } from '../domain/federation-info.contract.js';
+import type {
+  ArtefactInfo,
+  FederationInfo,
+  SharedInfo,
+} from '../domain/core/federation-info.contract.js';
 import {
-  type ArtefactInfo,
   bundleExposedAndMappings,
   describeExposed,
   describeSharedMappings,
 } from './bundle-exposed-and-mappings.js';
 import { bundleShared } from './bundle-shared.js';
-import type { FederationOptions } from './federation-options.js';
+import type { FederationOptions } from '../domain/core/federation-options.contract.js';
 import { writeFederationInfo } from './write-federation-info.js';
 import { writeImportMap } from './write-import-map.js';
 import { logger } from '../utils/logger.js';
 import { getCachePath } from './../utils/bundle-caching.js';
 import { normalizePackageName } from '../utils/normalize.js';
 import { AbortedError } from '../utils/errors.js';
-import type { NormalizedFederationConfig } from '../config/federation-config.contract.js';
-import type { NormalizedExternalConfig } from '../config/external-config.contract.js';
-
-export interface BuildParams {
-  skipMappingsAndExposed: boolean;
-  skipShared: boolean;
-  signal?: AbortSignal;
-}
+import type { NormalizedFederationConfig } from '../domain/config/federation-config.contract.js';
+import type { NormalizedExternalConfig } from '../domain/config/external-config.contract.js';
+import type { BuildParams } from '../domain/core/build-params.contract.js';
 
 export const defaultBuildParams: BuildParams = {
   skipMappingsAndExposed: false,

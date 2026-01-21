@@ -133,8 +133,8 @@ importers:
   packages/node:
     dependencies:
       '@nf-beta/core':
-        specifier: ^0.0.7
-        version: 0.0.7(typescript@5.9.3)
+        specifier: ^0.0.10
+        version: 0.0.10(typescript@5.9.3)
       '@nf-beta/runtime':
         specifier: ^0.0.2
         version: 0.0.2
@@ -142,8 +142,8 @@ importers:
   packages/runtime:
     devDependencies:
       '@nf-beta/core':
-        specifier: ^0.0.7
-        version: 0.0.7(typescript@5.9.3)
+        specifier: ^0.0.9
+        version: 0.0.9(typescript@5.9.3)
       '@types/node':
         specifier: ^22.5.4
         version: 22.19.3
@@ -1187,8 +1187,11 @@ packages:
   '@napi-rs/wasm-runtime@0.2.4':
     resolution: {integrity: sha512-9zESzOO5aDByvhIAsOy9TbpZ0Ur2AJbUI7UT73kcUTS2mxAMHOBaa1st/jAymNoCtvrit99kkzT1FZuXVcgfIQ==}
 
-  '@nf-beta/core@0.0.7':
-    resolution: {integrity: sha512-hvQnHYdxZLKVCmfzj6vcRpMN7N528uwCJy5sHVRVyepRJtfQEaf2cVlSCfGZ60nr6N1fSwMAqWfyr4UUaLZPVA==}
+  '@nf-beta/core@0.0.10':
+    resolution: {integrity: sha512-8wmh0wKvGRK6bHGIbwDFQ6fZkuHUd0HrV56DAdrmuRVah67qTnMebiOtPSjC+V0IqIRUlkk1TWEzLKUfzjX/Iw==}
+
+  '@nf-beta/core@0.0.9':
+    resolution: {integrity: sha512-5YAteYhQPN/3iDgCmtvFXOnicNqeRcBoMbNSViQ8VNcZjvh5as4iYy/ofYweNOGDvAvY0TmWBMXy/dZlZ+KBRw==}
 
   '@nf-beta/runtime@0.0.2':
     resolution: {integrity: sha512-MJTxHa1JQWbvZCGxIVryb5ydvSs/lQwa42ZDp//HDoz0X6aKFqS0qwjT0S7O25/uIEawOvXgOjJHX7tFyEPPzg==}
@@ -5295,7 +5298,16 @@ snapshots:
       '@emnapi/runtime': 1.7.1
       '@tybys/wasm-util': 0.9.0
 
-  '@nf-beta/core@0.0.7(typescript@5.9.3)':
+  '@nf-beta/core@0.0.10(typescript@5.9.3)':
+    dependencies:
+      '@softarc/sheriff-core': 0.19.6(typescript@5.9.3)
+      chalk: 5.6.2
+      fast-glob: 3.3.3
+      json5: 2.2.3
+    transitivePeerDependencies:
+      - typescript
+
+  '@nf-beta/core@0.0.9(typescript@5.9.3)':
     dependencies:
       '@softarc/sheriff-core': 0.19.6(typescript@5.9.3)
       chalk: 5.6.2

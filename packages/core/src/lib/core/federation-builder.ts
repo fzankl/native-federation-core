@@ -1,15 +1,16 @@
-import type { FederationInfo } from './../domain/federation-info.contract.js';
+import type { FederationInfo } from '../domain/core/federation-info.contract.js';
 import { getConfigContext, usePackageJson, useWorkspace } from '../config/configuration-context.js';
-import type { NormalizedFederationConfig } from '../config/federation-config.contract.js';
-import { type BuildAdapter, setBuildAdapter } from './build-adapter.js';
+import type { NormalizedFederationConfig } from '../domain/config/federation-config.contract.js';
+import { setBuildAdapter } from './build-adapter.js';
 import { buildForFederation, defaultBuildParams } from './build-for-federation.js';
-import { type FederationOptions } from './federation-options.js';
+import { type FederationOptions } from '../domain/core/federation-options.contract.js';
 import { getExternals } from './get-externals.js';
 import { loadFederationConfig } from './load-federation-config.js';
+import type { NFBuildAdapter } from '../domain/core/build-adapter.contract.js';
 
 export interface BuildHelperParams {
   options: FederationOptions;
-  adapter: BuildAdapter;
+  adapter: NFBuildAdapter;
 }
 
 let externals: string[] = [];

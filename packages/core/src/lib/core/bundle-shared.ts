@@ -1,14 +1,13 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import type { NormalizedFederationConfig } from '../config/federation-config.contract.js';
+import type { NormalizedFederationConfig } from '../domain/config/federation-config.contract.js';
 import { bundle } from '../utils/build-utils.js';
 import { getPackageInfo, type PackageInfo } from '../utils/package-info.js';
-import type { SharedInfo } from './../domain/federation-info.contract.js';
-import { type FederationOptions } from './federation-options.js';
+import type { SharedInfo } from '../domain/core/federation-info.contract.js';
+import { type FederationOptions } from '../domain/core/federation-options.contract.js';
 import { logger } from '../utils/logger.js';
 import crypto from 'crypto';
 import { DEFAULT_EXTERNAL_LIST } from './default-external-list.js';
-import type { EntryPoint, BuildResult } from './build-adapter.js';
 import {
   deriveInternalName,
   isSourceFile,
@@ -16,7 +15,8 @@ import {
 } from '../utils/rewrite-chunk-imports.js';
 import { cacheEntry, getChecksum, getFilename } from './../utils/bundle-caching.js';
 import { fileURLToPath } from 'url';
-import type { NormalizedExternalConfig } from '../config/external-config.contract.js';
+import type { NormalizedExternalConfig } from '../domain/config/external-config.contract.js';
+import type { EntryPoint, NFBuildAdapterResult } from '../domain/core/build-adapter.contract.js';
 
 export async function bundleShared(
   sharedBundles: Record<string, NormalizedExternalConfig>,
@@ -87,7 +87,7 @@ export async function bundleShared(
 
   const additionalExternals = useDefaultExternalList ? DEFAULT_EXTERNAL_LIST : [];
 
-  let bundleResult: BuildResult[] | null = null;
+  let bundleResult: NFBuildAdapterResult[] | null = null;
 
   try {
     bundleResult = await bundle({
@@ -203,7 +203,7 @@ function buildResult(
   });
 }
 
-function addChunksToResult(chunks: BuildResult[], result: SharedInfo[]) {
+function addChunksToResult(chunks: NFBuildAdapterResult[], result: SharedInfo[]) {
   for (const item of chunks) {
     const fileName = path.basename(item.fileName);
     result.push({

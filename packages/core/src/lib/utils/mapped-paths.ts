@@ -1,11 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import JSON5 from 'json5';
-
-export interface MappedPath {
-  key: string;
-  path: string;
-}
+import type { MappedPath } from '../domain/utils/mapped-path.contract.js';
 
 export interface GetMappedPathsOptions {
   rootTsConfigPath: string;
