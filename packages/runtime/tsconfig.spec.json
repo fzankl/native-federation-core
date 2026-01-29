@@ -6,10 +6,12 @@
     "types": ["vitest/globals", "vitest/importMeta", "vite/client", "node", "vitest", "@types/trusted-types"],
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["**/*.spec.ts", "**/*.test.ts", "**/*.d.ts", "**/*.ts"],
-  "references": [
-    {
-      "path": "./tsconfig.build.json"
-    }
-  ]
+  "include": [
+    "vite.config.ts",
+    "vite.config.mts",
+    "vitest.config.ts",
+    "vitest.config.mts",
+    "src/**/*.ts"
+  ],
+  "exclude": ["dist", "dist/**"]
 }
