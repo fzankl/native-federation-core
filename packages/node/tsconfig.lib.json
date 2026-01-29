@@ -28,6 +28,9 @@
   "references": [
     {
       "path": "../runtime/tsconfig.build.json"
+    },
+    {
+      "path": "../core/tsconfig.build.json"
     }
   ]
 }
