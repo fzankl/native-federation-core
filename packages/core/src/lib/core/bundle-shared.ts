@@ -24,8 +24,7 @@ export async function bundleShared(
   fedOptions: FederationOptions,
   externals: string[],
   platform: 'browser' | 'node' = 'browser',
-  buildIdx: number,
-  cacheOptions: { pathToCache: string; bundleName: string }
+  buildOptions: { pathToCache: string; bundleName: string; default: boolean }
 ): Promise<{ externals: SharedInfo[]; chunks?: Record<string, string[]> }> {
   const checksum = getChecksum(sharedBundles, fedOptions.dev ? '1' : '0');
   const folder = fedOptions.packageJson
@@ -33,14 +32,14 @@ export async function bundleShared(
     : fedOptions.workspaceRoot;
 
   const bundleCache = cacheEntry(
-    cacheOptions.pathToCache,
-    getFilename(cacheOptions.bundleName, fedOptions.dev)
+    buildOptions.pathToCache,
+    getFilename(buildOptions.bundleName, fedOptions.dev)
   );
 
   if (fedOptions?.cacheExternalArtifacts) {
     const cacheMetadata = bundleCache.getMetadata(checksum);
     if (cacheMetadata) {
-      logger.debug(`Checksum of ${cacheOptions.bundleName} matched, Skipped artifact bundling`);
+      logger.debug(`Checksum of ${buildOptions.bundleName} matched, Skipped artifact bundling`);
       bundleCache.copyFiles(path.join(fedOptions.workspaceRoot, fedOptions.outputPath));
       return { externals: cacheMetadata.externals, chunks: cacheMetadata.chunks };
     }
@@ -79,7 +78,7 @@ export async function bundleShared(
 
   const expectedResults = allEntryPoints.map(ep => path.join(fullOutputPath, ep.outName));
   const entryPoints = allEntryPoints.filter(
-    ep => !fs.existsSync(path.join(cacheOptions.pathToCache, ep.outName))
+    ep => !fs.existsSync(path.join(buildOptions.pathToCache, ep.outName))
   );
 
   // If we build for the browser and don't remote unused deps from the shared config,
@@ -95,17 +94,20 @@ export async function bundleShared(
       entryPoints,
       tsConfigPath: fedOptions.tsConfig,
       external: [...additionalExternals, ...externals],
-      outdir: cacheOptions.pathToCache,
+      outdir: buildOptions.pathToCache,
       mappedPaths: config.sharedMappings,
       dev: fedOptions.dev,
       kind: 'shared-package',
       hash: false,
+      chunks:
+        (typeof fedOptions.chunks === 'boolean' && fedOptions.chunks) ||
+        (typeof fedOptions.chunks === 'object' && !!fedOptions.chunks.enable),
       platform,
       optimizedMappings: config.features.ignoreUnusedDeps,
     });
 
     const cachedFiles = bundleResult.map(br => path.basename(br.fileName));
-    rewriteImports(cachedFiles, cacheOptions.pathToCache);
+    rewriteImports(cachedFiles, buildOptions.pathToCache);
   } catch (e) {
     logger.error('Error bundling shared npm package ');
     if (e instanceof Error) {
@@ -149,18 +151,16 @@ export async function bundleShared(
    * Chunking
    */
   let exportedChunks: ChunkInfo | undefined = undefined;
-  if (
-    (typeof fedOptions.chunking === 'boolean' && fedOptions.chunking === false) ||
-    (typeof fedOptions.chunking === 'object' && fedOptions.chunking.enable === false)
-  ) {
+  if (typeof fedOptions.chunks === 'object' && fedOptions.chunks.dense === true) {
     // Legacy method: Add chunks to "shared" object in remoteEntry.json
     addChunksToResult(chunks, result);
   } else {
     // New method: Add chunks to separate "chunks" object in remoteEntry.json
     result.forEach(external => {
-      external.buildIdx = buildIdx;
+      external.bundle = buildOptions.bundleName;
     });
-    exportedChunks = { [buildIdx]: getChunkFileNames(chunks) };
+
+    exportedChunks = { [buildOptions.bundleName]: getChunkFileNames(chunks) };
   }
 
   bundleCache.persist({

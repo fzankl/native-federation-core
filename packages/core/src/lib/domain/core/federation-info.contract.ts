@@ -12,14 +12,14 @@ export type SharedInfo = {
   version?: string;
   packageName: string;
   shareScope?: string;
-  buildIdx?: number;
+  bundle?: string;
   outFileName: string;
   dev?: {
     entryPoint: string;
   };
 };
 
-export type ChunkInfo = Record<number, string[]>;
+export type ChunkInfo = Record<string, string[]>;
 
 export interface ExposesInfo {
   key: string;

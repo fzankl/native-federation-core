@@ -67,7 +67,6 @@ export async function buildForFederation(
     const { sharedBrowser, sharedServer, separateBrowser, separateServer } = splitShared(
       config.shared
     );
-    let buildIDX = 0;
 
     if (Object.keys(sharedBrowser).length > 0) {
       notifyBundling('browser-shared');
@@ -78,19 +77,16 @@ export async function buildForFederation(
         fedOptions,
         externals,
         'browser',
-        buildIDX, // 0
-        { pathToCache, bundleName: 'browser-shared' }
+        { pathToCache, bundleName: 'browser-shared', default: true }
       );
 
       logger.measure(start, '[build artifacts] - To bundle all shared browser externals');
 
       addToCache(sharedPackageInfoBrowser);
-      buildIDX++;
 
       if (signal?.aborted)
         throw new AbortedError('[buildForFederation] After shared-browser bundle');
     }
-    buildIDX++;
 
     if (Object.keys(sharedServer).length > 0) {
       notifyBundling('browser-shared');
@@ -101,13 +97,11 @@ export async function buildForFederation(
         fedOptions,
         externals,
         'node',
-        buildIDX, // 0 (or 1)
-        { pathToCache, bundleName: 'node-shared' }
+        { pathToCache, bundleName: 'node-shared', default: true }
       );
       logger.measure(start, '[build artifacts] - To bundle all shared node externals');
 
       addToCache(sharedPackageInfoServer);
-      buildIDX++;
 
       if (signal?.aborted) throw new AbortedError('[buildForFederation] After shared-node bundle');
     }
@@ -121,12 +115,10 @@ export async function buildForFederation(
         config,
         fedOptions,
         'browser',
-        pathToCache,
-        buildIDX
+        pathToCache
       );
       logger.measure(start, '[build artifacts] - To bundle all separate browser externals');
       addToCache(separatePackageInfoBrowser);
-      buildIDX += Object.keys(separateBrowser).length;
       if (signal?.aborted)
         throw new AbortedError('[buildForFederation] After separate-browser bundle');
     }
@@ -140,10 +132,8 @@ export async function buildForFederation(
         config,
         fedOptions,
         'node',
-        pathToCache,
-        buildIDX
+        pathToCache
       );
-      buildIDX += Object.keys(separateBrowser).length;
 
       logger.measure(start, '[build artifacts] - To bundle all separate node externals');
       addToCache(separatePackageInfoServer);
@@ -213,8 +203,7 @@ async function bundleSeparatePackages(
   config: NormalizedFederationConfig,
   fedOptions: FederationOptions,
   platform: 'node' | 'browser',
-  pathToCache: string,
-  startBuildIDX: number
+  pathToCache: string
 ) {
   const groupedByPackage: Record<string, Record<string, NormalizedExternalConfig>> = {};
 
@@ -227,17 +216,17 @@ async function bundleSeparatePackages(
   }
 
   const bundlePromises = Object.entries(groupedByPackage).map(
-    async ([packageName, sharedGroup], idx) => {
+    async ([packageName, sharedGroup]) => {
       return bundleShared(
         sharedGroup,
         config,
         fedOptions,
         externals.filter(e => !e.startsWith(packageName)),
         platform,
-        startBuildIDX + idx, // 0 and 1 are reserved for the default builds
         {
           pathToCache,
           bundleName: `${platform}-${normalizePackageName(packageName)}`,
+          default: false,
         }
       );
     }
