@@ -77,7 +77,7 @@ export async function buildForFederation(
         fedOptions,
         externals,
         'browser',
-        { pathToCache, bundleName: 'browser-shared', default: true }
+        { pathToCache, bundleName: 'browser-shared' }
       );
 
       logger.measure(start, '[build artifacts] - To bundle all shared browser externals');
@@ -97,7 +97,7 @@ export async function buildForFederation(
         fedOptions,
         externals,
         'node',
-        { pathToCache, bundleName: 'node-shared', default: true }
+        { pathToCache, bundleName: 'node-shared' }
       );
       logger.measure(start, '[build artifacts] - To bundle all shared node externals');
 
@@ -146,10 +146,10 @@ export async function buildForFederation(
     ? describeSharedMappings(config, fedOptions)
     : artefactInfo.mappings;
 
-  addToCache({ externals: sharedMappingInfo });
+  const sharedExternals = [...sharedCache.externals, ...sharedMappingInfo];
 
   if (config?.shareScope) {
-    Object.values(sharedCache.externals).forEach(external => {
+    Object.values(sharedExternals).forEach(external => {
       if (!external.shareScope) external.shareScope = config.shareScope;
     });
   }
@@ -160,7 +160,7 @@ export async function buildForFederation(
       : undefined;
   const federationInfo: FederationInfo = {
     name: config.name,
-    shared: sharedCache.externals,
+    shared: sharedExternals,
     exposes: exposedInfo,
     buildNotificationsEndpoint,
   };
@@ -223,11 +223,7 @@ async function bundleSeparatePackages(
         fedOptions,
         externals.filter(e => !e.startsWith(packageName)),
         platform,
-        {
-          pathToCache,
-          bundleName: `${platform}-${normalizePackageName(packageName)}`,
-          default: false,
-        }
+        { pathToCache, bundleName: `${platform}-${normalizePackageName(packageName)}` }
       );
     }
   );

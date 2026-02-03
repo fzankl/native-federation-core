@@ -3,6 +3,7 @@ export type {
   FederationInfo,
   ExposesInfo,
   ArtefactInfo,
+  ChunkInfo,
 } from './federation-info.contract.js';
 export {
   type BuildNotificationOptions,

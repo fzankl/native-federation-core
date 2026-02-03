@@ -21,7 +21,7 @@ export async function bundleShared(
   fedOptions: FederationOptions,
   externals: string[],
   platform: 'browser' | 'node' = 'browser',
-  buildOptions: { pathToCache: string; bundleName: string; default: boolean }
+  buildOptions: { pathToCache: string; bundleName: string }
 ): Promise<{ externals: SharedInfo[]; chunks?: Record<string, string[]> }> {
   const checksum = getChecksum(sharedBundles, fedOptions.dev ? '1' : '0');
 
@@ -150,15 +150,12 @@ export async function bundleShared(
    */
   let exportedChunks: ChunkInfo | undefined = undefined;
   if (typeof fedOptions.chunks === 'object' && fedOptions.chunks.dense === true) {
-    // Legacy method: Add chunks to "shared" object in remoteEntry.json
-    addChunksToResult(chunks, result);
-  } else {
-    // New method: Add chunks to separate "chunks" object in remoteEntry.json
     result.forEach(external => {
       external.bundle = buildOptions.bundleName;
     });
-
     exportedChunks = { [buildOptions.bundleName]: getChunkFileNames(chunks) };
+  } else {
+    addChunksToResult(chunks, result);
   }
 
   bundleCache.persist({

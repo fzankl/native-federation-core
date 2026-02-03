@@ -1,4 +1,4 @@
-export const CHUNK_PREFIX = '@nf-chunk';
+export const CHUNK_PREFIX = '@nf-internal';
 
 export function toChunkImport(fileName: string): string {
   if (fileName.startsWith('./')) {
