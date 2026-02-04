@@ -3,6 +3,7 @@ export type {
   FederationInfo,
   ExposesInfo,
   ArtefactInfo,
+  ChunkInfo,
 } from './federation-info.contract.js';
 export {
   type BuildNotificationOptions,
@@ -17,3 +18,4 @@ export type {
   NFBuildAdapterResult,
 } from './build-adapter.contract.js';
 export type { BuildParams } from './build-params.contract.js';
+export { CHUNK_PREFIX, toChunkImport } from './chunk.js';
